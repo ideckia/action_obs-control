@@ -1,0 +1,49 @@
+[
+	{
+		"name": "set scene",
+		"props": {
+			"address": "::localhost:4455::",
+			"password": "::my_password::",
+			"request_type": "Switch scene",
+			"scene_name": "::my-scene-name::"
+		}
+	},
+	{
+		"name": "activate source",
+		"props": {
+			"address": "::localhost:4455::",
+			"password": "::my_password::",
+			"request_type": "Activate source",
+			"scene_name": "::my-scene-name::",
+			"source_name": "::my-source-name::"
+		}
+	},
+	{
+		"name": "deactivate source",
+		"props": {
+			"address": "::localhost:4455::",
+			"password": "::my_password::",
+			"request_type": "Deactivate source",
+			"scene_name": "::my-scene-name::",
+			"source_name": "::my-source-name::"
+		}
+	},
+	{
+		"name": "mute input",
+		"props": {
+			"address": "::localhost:4455::",
+			"password": "::my_password::",
+			"request_type": "Mute input",
+			"input_name": "::my-input-name::"
+		}
+	},
+	{
+		"name": "unmute input",
+		"props": {
+			"address": "::localhost:4455::",
+			"password": "::my_password::",
+			"request_type": "Unmute input",
+			"input_name": "::my-input-name::"
+		}
+	}
+]
