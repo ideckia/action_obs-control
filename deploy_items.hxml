@@ -1,0 +1,2 @@
+build_items.hxml
+-D --no-local-libs

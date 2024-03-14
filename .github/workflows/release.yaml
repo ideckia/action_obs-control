@@ -1,0 +1,99 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      SCENES_CMD_NAME: obs-scenes
+      ITEMS_CMD_NAME: obs-items
+      CONTROL_BASE_CMD_NAME: _obs-control-base
+      HAXE_VERSION: latest
+      NODE_VERSION: 16
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install lix, haxe ${{ env.HAXE_VERSION }} and dependencies
+      run: |
+            npm i -g lix
+            lix install haxe ${{ env.HAXE_VERSION }}
+            lix download
+
+    - name: Compile project
+      run: haxe deploy_all.hxml
+
+    - name: Install node.js dependencies
+      run: npm install
+
+    - name: Minify node_modules
+      run: |
+        mv node_modules nm_old
+        mkdir -p node_modules/obs-websocket-js/dist
+        mv nm_old/crypto-js node_modules
+        mv nm_old/debug node_modules
+        mv nm_old/eventemitter3 node_modules
+        mv nm_old/isomorphic-ws node_modules
+        mv nm_old/ms node_modules
+        mv nm_old/ws node_modules
+        mv nm_old/obs-websocket-js/package.json node_modules/obs-websocket-js
+        mv nm_old/obs-websocket-js/dist/json.cjs node_modules/obs-websocket-js/dist
+        mv nm_old/obs-websocket-js/dist/json.modern.js node_modules/obs-websocket-js/dist
+        mv nm_old/obs-websocket-js/dist/json.module.js node_modules/obs-websocket-js/dist
+        mv nm_old/obs-websocket-js/dist/msgpack.cjs node_modules/obs-websocket-js/dist
+        mv nm_old/obs-websocket-js/dist/msgpack.modern.js node_modules/obs-websocket-js/dist
+        mv nm_old/obs-websocket-js/dist/obs-ws.min.js node_modules/obs-websocket-js/dist
+
+    - name: Create scenes directory to release
+      run: |
+        mkdir ${{ env.SCENES_CMD_NAME }}
+        mv bin/scenes/index.js ${{ env.SCENES_CMD_NAME }}
+        cp presets.json ${{ env.SCENES_CMD_NAME }}
+        mv scenes_readme.md ${{ env.SCENES_CMD_NAME }}
+        cp node_modules ${{ env.SCENES_CMD_NAME }}
+        echo '{"repository": "http://github.com/${{ github.repository }}","filename": "${{ env.SCENES_CMD_NAME }}.zip","version": "${{ github.ref_name }}"}' > ${{ env.SCENES_CMD_NAME }}/.info
+
+    - name: Create items directory to release
+      run: |
+        mkdir ${{ env.ITEMS_CMD_NAME }}
+        mv bin/items/index.js ${{ env.ITEMS_CMD_NAME }}
+        cp presets.json ${{ env.ITEMS_CMD_NAME }}
+        mv items_readme.md ${{ env.ITEMS_CMD_NAME }}
+        cp node_modules ${{ env.ITEMS_CMD_NAME }}
+        echo '{"repository": "http://github.com/${{ github.repository }}","filename": "${{ env.ITEMS_CMD_NAME }}.zip","version": "${{ github.ref_name }}"}' > ${{ env.ITEMS_CMD_NAME }}/.info
+
+    - name: Create control base directory to release
+      run: |
+        mkdir ${{ env.CONTROL_BASE_CMD_NAME }}
+        mv bin/control_base/index.js ${{ env.CONTROL_BASE_CMD_NAME }}
+        mv node_modules ${{ env.CONTROL_BASE_CMD_NAME }}
+
+    - name: Package scenes release
+      run: |
+        zip -r ${{ env.SCENES_CMD_NAME }} ${{ env.SCENES_CMD_NAME }} ${{ env.CONTROL_BASE_CMD_NAME }}
+
+    - name: Package items release
+      run: |
+        zip -r ${{ env.ITEMS_CMD_NAME }} ${{ env.ITEMS_CMD_NAME }} ${{ env.CONTROL_BASE_CMD_NAME }}
+
+    - name: Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
+        files: |
+          ${{ env.SCENES_CMD_NAME }}.zip
+          ${{ env.ITEMS_CMD_NAME }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

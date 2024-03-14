@@ -1,0 +1,8 @@
+--class-path src
+--library hxnodejs
+--library ideckia_api
+--dce full
+-D js-es=6
+ObsItems
+
+--js bin/items/index.js
