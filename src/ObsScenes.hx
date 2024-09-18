@@ -1,31 +1,30 @@
 package;
 
-import api.action.Data;
-
 using api.IdeckiaApi;
 
 typedef Props = {
 	@:shared('obs.address')
-	@:editable('Obs address', "localhost:4455")
+	@:editable('prop_obs_address', "localhost:4455")
 	var address:String;
 	@:shared('obs.password')
-	@:editable('Obs password')
+	@:editable('prop_obs_password')
 	var password:String;
 }
 
 @:name("obs-scenes")
-@:description("Create a directory with the current obs scenes dynamically")
+@:description("scenes_action_description")
+@:localize
 class ObsScenes extends IdeckiaAction {
 	static var SCENE_BG = Data.embedBase64('film_frame.png');
 	static var obs:ObsWebsocket = new ObsWebsocket();
 
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState> {
 		return new js.lib.Promise((resolve, reject) -> {
-			var runtimeBack = Data.getBase64('film_frame.png');
+			var runtimeBack = core.data.getBase64('film_frame.png');
 			if (runtimeBack != null)
 				SCENE_BG = runtimeBack;
 
-			obs = new ObsWebsocket(props.address, props.password, server);
+			obs = new ObsWebsocket(props.address, props.password, core);
 
 			obs.checkConnection().then(_ -> {
 				resolve(initialState);
@@ -91,8 +90,8 @@ class ObsScenes extends IdeckiaAction {
 	}
 
 	function log(value:Dynamic, ?pos:haxe.PosInfos) {
-		if (server != null)
-			server.log.debug(value);
+		if (core != null)
+			core.log.debug(value);
 		else
 			trace(value, pos);
 	}

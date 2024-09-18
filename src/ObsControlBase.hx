@@ -1,30 +1,29 @@
 package;
 
-import api.action.Data;
-
 using api.IdeckiaApi;
 
 typedef Props = {
-	@:shared
-	@:editable('Obs address', 'localhost:4455')
+	@:shared('obs.address')
+	@:editable('prop_obs_address', 'localhost:4455')
 	var address:String;
-	@:shared
-	@:editable('Obs password')
+	@:shared('obs.password')
+	@:editable('prop_obs_password')
 	var password:String;
-	@:editable('Obs request', 'Switch scene', ['Switch scene', 'Toggle source', 'Mute input', 'Unmute input'])
+	@:editable('base_prop_request_type', 'Switch scene', ['Switch scene', 'Toggle source', 'Mute input', 'Unmute input'])
 	var request_type:String;
-	@:editable('Scene name mandatory in "Switch scene" and "Toggle source" requests')
+	@:editable('base_prop_scene_name')
 	var scene_name:String;
-	@:editable('Source name mandatory in "Toggle source" requests')
+	@:editable('base_prop_source_name')
 	var source_name:String;
-	@:editable('Input name mandatory in "Mute input" and "Unmute input" requests')
+	@:editable('base_prop_input_name')
 	var input_name:String;
 	var clickCallback:Void->js.lib.Promise<ActionOutcome>;
 	var obs:ObsWebsocket;
 }
 
 @:name("obs-control-base")
-@:description("Basic OBS control to call to the websocket")
+@:description("base_action_description")
+@:localize
 class ObsControlBase extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState> {
 		return new js.lib.Promise((resolve, reject) -> {
@@ -39,7 +38,7 @@ class ObsControlBase extends IdeckiaAction {
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
 		return new js.lib.Promise((resolve, reject) -> {
 			callOBSRequest(currentState).then(data -> {
-				server.log.debug('Received data: $data.');
+				core.log.debug('Received data: $data.');
 				if (props.clickCallback == null)
 					resolve(new ActionOutcome({state: currentState}));
 				else

@@ -5,13 +5,13 @@ class ObsWebsocket {
 	var obs:ObsWebsocketExtern;
 	var address:String;
 	var password:String;
-	var server:IdeckiaServer;
+	var core:IdeckiaCore;
 
-	public function new(?address:String, ?password:String, ?server:IdeckiaServer) {
+	public function new(?address:String, ?password:String, ?core:IdeckiaCore) {
 		obs = new ObsWebsocketExtern();
 		this.address = address;
 		this.password = password;
-		this.server = server;
+		this.core = core;
 	}
 
 	public function connect():js.lib.Promise<Bool> {
@@ -153,8 +153,8 @@ class ObsWebsocket {
 	}
 
 	function log(value:Dynamic, ?pos:haxe.PosInfos) {
-		if (server != null)
-			server.log.debug(value);
+		if (core != null)
+			core.log.debug(value);
 		else
 			trace(value, pos);
 	}

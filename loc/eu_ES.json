@@ -1,0 +1,38 @@
+[
+	{
+		"id": "items_action_description",
+		"text": "OBS-n une honetan dagoen eszenako iturburuekin item multzoa erakusten du"
+	},
+	{
+		"id": "scenes_action_description",
+		"text": "OBS-n definitutako eszenekin item multzoa erakusten du"
+	},
+	{
+		"id": "base_action_description",
+		"text": "OBSko websocket-ari deia egiten dion oinarrizko kontrola"
+	},
+	{
+		"id": "prop_obs_address",
+		"text": "OBS helbidea"
+	},
+	{
+		"id": "prop_obs_password",
+		"text": "OBS pasahitza"
+	},
+	{
+		"id": "base_prop_request_type",
+		"text": "OBS eskaera mota"
+	},
+	{
+		"id": "base_prop_scene_name",
+		"text": "Eszena izena derrigorrezkoa da 'Switch scene' eta 'Toggle source' eskaeretan"
+	},
+	{
+		"id": "base_prop_source_name",
+		"text": "Iturburu izena derrigorrezkoa da 'Toggle source' eskaeretan"
+	},
+	{
+		"id": "base_prop_input_name",
+		"text": "Sarrera izena derrigorrezkoa da 'Mute input' eta 'Unmute input' eskaeretan"
+	}
+]

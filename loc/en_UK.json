@@ -1,0 +1,38 @@
+[
+	{
+		"id": "items_action_description",
+		"text": "Create a dynamic directory with the current OBS scene sources"
+	},
+	{
+		"id": "scenes_action_description",
+		"text": "Create a dynamic directory with the current OBS scenes"
+	},
+	{
+		"id": "base_action_description",
+		"text": "Basic OBS control to call to the websocket"
+	},
+	{
+		"id": "prop_obs_address",
+		"text": "OBS address"
+	},
+	{
+		"id": "prop_obs_password",
+		"text": "OBS password"
+	},
+	{
+		"id": "base_prop_request_type",
+		"text": "OBS request type"
+	},
+	{
+		"id": "base_prop_scene_name",
+		"text": "Scene name mandatory in 'Switch scene' and 'Toggle source' requests"
+	},
+	{
+		"id": "base_prop_source_name",
+		"text": "Source name mandatory in 'Toggle source' requests"
+	},
+	{
+		"id": "base_prop_input_name",
+		"text": "Input name mandatory in 'Mute input' and 'Unmute input' requests"
+	}
+]
