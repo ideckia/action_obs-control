@@ -1,4 +1,4 @@
-# [BETA] Action for [ideckia](https://ideckia.github.io/): obs-items
+# [BETA] Action for [ideckia](https://ideckia.github.io/): obs-all-items
 
 ## Description
 
@@ -27,11 +27,11 @@ node test_action.js
 
 ```json
 {
-    "text": "obs-items example",
+    "text": "obs-all-items example",
     "bgColor": "00ff00",
     "actions": [
         {
-            "name": "obs-items",
+            "name": "obs-all-items",
             "props": {
                 "address": "localhost:4455",
                 "password": null

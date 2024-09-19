@@ -1,4 +1,4 @@
 index.js
-move.sh
+move*.sh
 gen.readme.md
 node_modules/*

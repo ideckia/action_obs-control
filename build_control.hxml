@@ -3,6 +3,6 @@
 --library ideckia_api
 --dce full
 -D js-es=6
-ObsControlBase
+ObsControl
 
---js bin/control_base/index.js
+--js bin/control/index.js

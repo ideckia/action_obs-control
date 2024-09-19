@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      SCENES_CMD_NAME: obs-scenes
-      ITEMS_CMD_NAME: obs-items
-      CONTROL_BASE_CMD_NAME: _obs-control-base
+      SCENES_CMD_NAME: obs-all-scenes
+      ITEMS_CMD_NAME: obs-all-items
+      CONTROL_CMD_NAME: obs-control
       HAXE_VERSION: latest
       NODE_VERSION: 16
 
@@ -59,7 +59,6 @@ jobs:
       run: |
         mkdir ${{ env.SCENES_CMD_NAME }}
         mv bin/scenes/index.js ${{ env.SCENES_CMD_NAME }}
-        cp presets.json ${{ env.SCENES_CMD_NAME }}
         mv scenes_readme.md ${{ env.SCENES_CMD_NAME }}
         cp node_modules ${{ env.SCENES_CMD_NAME }}
         echo '{"repository": "http://github.com/${{ github.repository }}","filename": "${{ env.SCENES_CMD_NAME }}.zip","version": "${{ github.ref_name }}"}' > ${{ env.SCENES_CMD_NAME }}/.info
@@ -68,24 +67,28 @@ jobs:
       run: |
         mkdir ${{ env.ITEMS_CMD_NAME }}
         mv bin/items/index.js ${{ env.ITEMS_CMD_NAME }}
-        cp presets.json ${{ env.ITEMS_CMD_NAME }}
         mv items_readme.md ${{ env.ITEMS_CMD_NAME }}
         cp node_modules ${{ env.ITEMS_CMD_NAME }}
         echo '{"repository": "http://github.com/${{ github.repository }}","filename": "${{ env.ITEMS_CMD_NAME }}.zip","version": "${{ github.ref_name }}"}' > ${{ env.ITEMS_CMD_NAME }}/.info
 
-    - name: Create control base directory to release
+    - name: Create control directory to release
       run: |
-        mkdir ${{ env.CONTROL_BASE_CMD_NAME }}
-        mv bin/control_base/index.js ${{ env.CONTROL_BASE_CMD_NAME }}
-        mv node_modules ${{ env.CONTROL_BASE_CMD_NAME }}
+        mkdir ${{ env.CONTROL_CMD_NAME }}
+        cp presets.json ${{ env.CONTROL_CMD_NAME }}
+        mv bin/control/index.js ${{ env.CONTROL_CMD_NAME }}
+        mv node_modules ${{ env.CONTROL_CMD_NAME }}
 
     - name: Package scenes release
       run: |
-        zip -r ${{ env.SCENES_CMD_NAME }} ${{ env.SCENES_CMD_NAME }} ${{ env.CONTROL_BASE_CMD_NAME }}
+        zip -r ${{ env.SCENES_CMD_NAME }} ${{ env.SCENES_CMD_NAME }}
 
     - name: Package items release
       run: |
-        zip -r ${{ env.ITEMS_CMD_NAME }} ${{ env.ITEMS_CMD_NAME }} ${{ env.CONTROL_BASE_CMD_NAME }}
+        zip -r ${{ env.ITEMS_CMD_NAME }} ${{ env.ITEMS_CMD_NAME }}
+
+    - name: Package items release
+      run: |
+        zip -r ${{ env.CONTROL_CMD_NAME }} ${{ env.CONTROL_CMD_NAME }}
 
     - name: Release
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -95,5 +98,6 @@ jobs:
         files: |
           ${{ env.SCENES_CMD_NAME }}.zip
           ${{ env.ITEMS_CMD_NAME }}.zip
+          ${{ env.CONTROL_CMD_NAME }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

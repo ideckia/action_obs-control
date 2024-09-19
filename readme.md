@@ -2,5 +2,6 @@
 
 Two actions are defined in this repository:
 
-* [obs-scenes](./scenes_readme.md)
-* [obs-items](./items_readme.md)
+* [obs-all-scenes](./scenes_readme.md)
+* [obs-all-items](./items_readme.md)
+* [obs-control](./control_readme.md)

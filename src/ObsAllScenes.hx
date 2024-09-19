@@ -11,7 +11,7 @@ typedef Props = {
 	var password:String;
 }
 
-@:name("obs-scenes")
+@:name("obs-all-scenes")
 @:description("scenes_action_description")
 @:localize
 class ObsScenes extends IdeckiaAction {
@@ -58,7 +58,7 @@ class ObsScenes extends IdeckiaAction {
 						textPosition: 'center',
 						actions: [
 							{
-								name: '_obs-control-base',
+								name: 'obs-control',
 								props: {
 									obs: obs,
 									request_type: "Switch scene",

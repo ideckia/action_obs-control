@@ -1,14 +1,14 @@
 [
 	{
 		"id": "items_action_description",
-		"text": "OBS-n une honetan dagoen eszenako iturburuekin item multzoa erakusten du"
+		"text": "OBS-tik automatikoki erakusten ditu une honetan dagoen eszenako iturburuak."
 	},
 	{
 		"id": "scenes_action_description",
-		"text": "OBS-n definitutako eszenekin item multzoa erakusten du"
+		"text": "OBS-tik automatikoki erakusten ditu eszena guztiak."
 	},
 	{
-		"id": "base_action_description",
+		"id": "control_action_description",
 		"text": "OBSko websocket-ari deia egiten dion oinarrizko kontrola"
 	},
 	{

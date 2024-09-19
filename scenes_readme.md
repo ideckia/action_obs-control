@@ -1,4 +1,4 @@
-# [BETA] Action for [ideckia](https://ideckia.github.io/): obs-scenes
+# [BETA] Action for [ideckia](https://ideckia.github.io/): obs-all-scenes
 
 ## Description
 
@@ -27,11 +27,11 @@ node test_action.js
 
 ```json
 {
-    "text": "obs-scenes example",
+    "text": "obs-all-scenes example",
     "bgColor": "00ff00",
     "actions": [
         {
-            "name": "obs-scenes",
+            "name": "obs-all-scenes",
             "props": {
                 "address": "localhost:4455",
                 "password": null

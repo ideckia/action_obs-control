@@ -1,4 +1,4 @@
-deploy_control_base.hxml
+deploy_control.hxml
 --next
 deploy_items.hxml
 --next

@@ -140,7 +140,6 @@ class ObsWebsocket {
 				connectToObs();
 			} else {
 				obs.call('GetVersion').then(data -> {
-					log(data);
 					log('OBS already connected.');
 					resolve(true);
 				}).catchError((error) -> {

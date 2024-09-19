@@ -11,7 +11,7 @@ typedef Props = {
 	var password:String;
 }
 
-@:name("obs-items")
+@:name("obs-all-items")
 @:description("items_action_description")
 @:localize
 class ObsItems extends IdeckiaAction {
@@ -55,7 +55,7 @@ class ObsItems extends IdeckiaAction {
 						bgColor: s.sceneItemEnabled ? 'ff00aa00' : 'ffaa0000',
 						actions: [
 							{
-								name: '_obs-control-base',
+								name: 'obs-control',
 								props: {
 									obs: obs,
 									request_type: 'Toggle source',

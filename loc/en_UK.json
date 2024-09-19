@@ -1,14 +1,14 @@
 [
 	{
 		"id": "items_action_description",
-		"text": "Create a dynamic directory with the current OBS scene sources"
+		"text": "Shows automatically all the items of the current scene retrieved from OBS."
 	},
 	{
 		"id": "scenes_action_description",
-		"text": "Create a dynamic directory with the current OBS scenes"
+		"text": "Shows automatically all the current scene retrieved from OBS."
 	},
 	{
-		"id": "base_action_description",
+		"id": "control_action_description",
 		"text": "Basic OBS control to call to the websocket"
 	},
 	{

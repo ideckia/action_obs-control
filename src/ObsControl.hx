@@ -21,8 +21,8 @@ typedef Props = {
 	var obs:ObsWebsocket;
 }
 
-@:name("obs-control-base")
-@:description("base_action_description")
+@:name("obs-control")
+@:description("control_action_description")
 @:localize
 class ObsControlBase extends IdeckiaAction {
 	override public function init(initialState:ItemState):js.lib.Promise<ItemState> {
@@ -38,7 +38,6 @@ class ObsControlBase extends IdeckiaAction {
 	public function execute(currentState:ItemState):js.lib.Promise<ActionOutcome> {
 		return new js.lib.Promise((resolve, reject) -> {
 			callOBSRequest(currentState).then(data -> {
-				core.log.debug('Received data: $data.');
 				if (props.clickCallback == null)
 					resolve(new ActionOutcome({state: currentState}));
 				else
@@ -69,18 +68,41 @@ class ObsControlBase extends IdeckiaAction {
 		}
 	}
 
+	function checkObsConnection() {
+		return new js.lib.Promise((resolve, reject) -> {
+			if (props.obs != null) {
+				resolve(true);
+				return;
+			}
+
+			props.obs = new ObsWebsocket(props.address, props.password, core);
+
+			props.obs.checkConnection().then(_ -> {
+				resolve(true);
+			}).catchError(e -> {
+				var msg = 'Error checking connection to OBS: [$e]';
+				reject(msg);
+			});
+		});
+	}
+
 	function callOBSRequest(currentState:ItemState) {
-		return switch props.request_type {
-			case 'Switch scene':
-				props.obs.setCurrentScene(props.scene_name);
-			case 'Toggle source':
-				toggleSourceActiveObsRequest(currentState);
-			case 'Mute input':
-				props.obs.setInputMute(props.input_name, true);
-			case 'Unmute input':
-				props.obs.setInputMute(props.input_name, false);
-			case _: js.lib.Promise.resolve(false);
-		}
+		return new js.lib.Promise((resolve, reject) -> {
+			checkObsConnection().then(_ -> {
+				var promise = switch props.request_type {
+					case 'Switch scene':
+						props.obs.setCurrentScene(props.scene_name);
+					case 'Toggle source':
+						toggleSourceActiveObsRequest(currentState);
+					case 'Mute input':
+						props.obs.setInputMute(props.input_name, true);
+					case 'Unmute input':
+						props.obs.setInputMute(props.input_name, false);
+					case _: js.lib.Promise.resolve(false);
+				}
+				promise.then(resolve).catchError(reject);
+			});
+		}).catchError(_ -> {});
 	}
 
 	function toggleSourceActiveObsRequest(currentState:ItemState) {
