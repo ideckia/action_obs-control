@@ -14,7 +14,7 @@ jobs:
       SCENES_CMD_NAME: obs-all-scenes
       ITEMS_CMD_NAME: obs-all-items
       CONTROL_CMD_NAME: obs-control
-      HAXE_VERSION: latest
+      HAXE_VERSION: 4.2.4
       NODE_VERSION: 16
 
     steps:
