@@ -41,7 +41,7 @@ class ObsWebsocket {
 	public function getCurrentScene() {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkConnection().then(_ -> {
-				obs.call('GetCurrentProgramScene', {}).then(response -> {
+				obs.call(Enums.ObsRequest.getCurrentProgramScene, {}).then(response -> {
 					var obsResponse:ObsCurrentSceneResponse = cast response;
 					resolve(obsResponse);
 				}).catchError(reject);
@@ -52,7 +52,7 @@ class ObsWebsocket {
 	public function getScenes() {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkConnection().then(_ -> {
-				obs.call('GetSceneList', {}).then(response -> {
+				obs.call(Enums.ObsRequest.getSceneList, {}).then(response -> {
 					var obsResponse:ObsScenesResponse = cast response;
 					resolve(obsResponse);
 				}).catchError(reject);
@@ -63,7 +63,7 @@ class ObsWebsocket {
 	public function getSceneItems(sceneName:String) {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkConnection().then(_ -> {
-				obs.call('GetSceneItemList', {sceneName: sceneName}).then(response -> {
+				obs.call(Enums.ObsRequest.getSceneItemList, {sceneName: sceneName}).then(response -> {
 					var obsResponse:ObsSceneItemsResponse = cast response;
 					resolve(obsResponse);
 				}).catchError(reject);
@@ -74,7 +74,7 @@ class ObsWebsocket {
 	public function setCurrentScene(sceneName:String) {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkConnection().then(_ -> {
-				obs.call('SetCurrentProgramScene', {
+				obs.call(Enums.ObsRequest.setCurrentProgramScene, {
 					"sceneName": sceneName
 				}).then(data -> {
 					resolve(true);
@@ -89,7 +89,7 @@ class ObsWebsocket {
 	public function setInputMute(inputName:String, inputMuted:Bool) {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkConnection().then(_ -> {
-				obs.call('SetInputMute', {
+				obs.call(Enums.ObsRequest.setInputMute, {
 					"inputName": inputName,
 					"inputMuted": inputMuted
 				}).then(data -> {
@@ -105,7 +105,7 @@ class ObsWebsocket {
 	public function setSourceEnabled(sceneName:String, sceneItemId:UInt, isEnabled:Bool) {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkConnection().then(_ -> {
-				obs.call('SetSceneItemEnabled', {
+				obs.call(Enums.ObsRequest.setSceneItemEnabled, {
 					"sceneName": sceneName,
 					"sceneItemId": sceneItemId,
 					"sceneItemEnabled": isEnabled
@@ -139,7 +139,7 @@ class ObsWebsocket {
 				obs = new ObsWebsocketExtern();
 				connectToObs();
 			} else {
-				obs.call('GetVersion').then(data -> {
+				obs.call(Enums.ObsRequest.getVersion).then(data -> {
 					log('OBS already connected.');
 					resolve(true);
 				}).catchError((error) -> {

@@ -58,7 +58,7 @@ class ObsItems extends IdeckiaAction {
 								name: 'obs-control',
 								props: {
 									obs: obs,
-									request_type: 'Toggle source',
+									request_type: Enums.RequestType.toggle_source,
 									scene_name: sceneName,
 									source_name: s.sourceName,
 									clickCallback: execute.bind(currentState)
@@ -84,7 +84,7 @@ class ObsItems extends IdeckiaAction {
 					}
 				}));
 			}).catchError(e -> {
-				core.dialog.error('OBS itemak lortzean errorea', 'Errorea: $e');
+				core.dialog.error(Loc.error_getting_obs_items.tr(), '$e');
 				reject(e);
 			});
 		});

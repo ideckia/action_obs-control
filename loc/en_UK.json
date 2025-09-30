@@ -34,5 +34,25 @@
 	{
 		"id": "base_prop_input_name",
 		"text": "Input name mandatory in 'Mute input' and 'Unmute input' requests"
+	},
+	{
+		"id": "error_getting_obs_items",
+		"text": "Error getting OBS source items"
+	},
+	{
+		"id": "scene_name_mandatory",
+		"text": "'scene_name' is mandatory."
+	},
+	{
+		"id": "scene_and_source_names_mandatory",
+		"text": "'scene_name' and 'source_name' are mandatory."
+	},
+	{
+		"id": "input_name_mandatory",
+		"text": "'input_name' is mandatory."
+	},
+	{
+		"id": "request_type_mandatory",
+		"text": "'request_type' is mandatory."
 	}
 ]

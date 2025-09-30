@@ -4,13 +4,24 @@ using api.IdeckiaApi;
 
 typedef Props = {
 	@:shared('obs.address')
-	@:editable('prop_obs_address', 'localhost:4455')
+	@:editable('prop_obs_address', "localhost:4455")
 	var address:String;
 	@:shared('obs.password')
 	@:editable('prop_obs_password')
 	var password:String;
-	@:editable('base_prop_request_type', 'Switch scene', ['Switch scene', 'Toggle source', 'Mute input', 'Unmute input'])
-	var request_type:String;
+	@:editable('base_prop_request_type', switch_scene, [
+		switch_scene,
+		toggle_source,
+		mute_input,
+		unmute_input,
+		start_recording,
+		stop_recording,
+		toggle_recording,
+		start_streaming,
+		stop_streaming,
+		toggle_streaming
+	], PropEditorFieldType.text)
+	var request_type:Enums.RequestType;
 	@:editable('base_prop_scene_name')
 	var scene_name:String;
 	@:editable('base_prop_source_name')
@@ -56,15 +67,16 @@ class ObsControlBase extends IdeckiaAction {
 
 	function assertProps() {
 		return switch props.request_type {
-			case 'Switch scene' if (props.scene_name == null):
-				'"scene_name" is mandatory.';
-			case 'Toggle source' if (props.scene_name == null && props.source_name == null):
-				'"scene_name" and "source_name" are mandatory.';
-			case 'Mute input' | 'Unmute input' if (props.input_name == null):
-				'"input_name" is mandatory.';
+			case switch_scene if (props.scene_name == null):
+				Loc.scene_name_mandatory.tr();
+			case toggle_source if (props.scene_name == null && props.source_name == null):
+				Loc.scene_and_source_names_mandatory.tr();
+			case mute_input | unmute_input if (props.input_name == null):
+				Loc.input_name_mandatory.tr();
 			case x if (x == ''):
-				'"request_type" is mandatory';
-			case _: '';
+				Loc.request_type_mandatory.tr();
+			case _:
+				'';
 		}
 	}
 
@@ -90,16 +102,29 @@ class ObsControlBase extends IdeckiaAction {
 		return new js.lib.Promise((resolve, reject) -> {
 			checkObsConnection().then(_ -> {
 				var promise = switch props.request_type {
-					case 'Switch scene':
+					case switch_scene:
 						props.obs.setCurrentScene(props.scene_name);
-					case 'Toggle source':
+					case toggle_source:
 						toggleSourceActiveObsRequest(currentState);
-					case 'Mute input':
+					case mute_input:
 						props.obs.setInputMute(props.input_name, true);
-					case 'Unmute input':
+					case unmute_input:
 						props.obs.setInputMute(props.input_name, false);
+					case start_recording:
+						js.lib.Promise.resolve(false);
+					case stop_recording:
+						js.lib.Promise.resolve(false);
+					case toggle_recording:
+						js.lib.Promise.resolve(false);
+					case start_streaming:
+						js.lib.Promise.resolve(false);
+					case stop_streaming:
+						js.lib.Promise.resolve(false);
+					case toggle_streaming:
+						js.lib.Promise.resolve(false);
 					case _: js.lib.Promise.resolve(false);
 				}
+
 				promise.then(resolve).catchError(reject);
 			});
 		}).catchError(_ -> {});

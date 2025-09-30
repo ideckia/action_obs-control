@@ -34,5 +34,25 @@
 	{
 		"id": "base_prop_input_name",
 		"text": "Sarrera izena derrigorrezkoa da 'Mute input' eta 'Unmute input' eskaeretan"
+	},
+	{
+		"id": "error_getting_obs_items",
+		"text": "OBS itemak lortzean errorea"
+	},
+	{
+		"id": "scene_name_mandatory",
+		"text": "'scene_name' derrigorrezkoa da."
+	},
+	{
+		"id": "scene_and_source_names_mandatory",
+		"text": "'scene_name' and 'source_name' derrigorrezkoak dira."
+	},
+	{
+		"id": "input_name_mandatory",
+		"text": "'input_name' derrigorrezkoa da."
+	},
+	{
+		"id": "request_type_mandatory",
+		"text": "'request_type' derrigorrezkoa da."
 	}
 ]

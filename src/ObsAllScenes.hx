@@ -61,7 +61,7 @@ class ObsScenes extends IdeckiaAction {
 								name: 'obs-control',
 								props: {
 									obs: obs,
-									request_type: "Switch scene",
+									request_type: Enums.RequestType.switch_scene,
 									scene_name: s.sceneName,
 									clickCallback: execute.bind(currentState)
 								}
